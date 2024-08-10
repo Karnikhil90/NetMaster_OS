@@ -1,0 +1,63 @@
+
+### `src` Folder Overview for ESP32 Development
+
+The `src` folder is dedicated to housing all the software components that are specifically tailored for the ESP32 microcontroller. This folder contains the core logic, utilities, and modules that enable the NetMaster_OS to function efficiently on the ESP32 hardware.
+
+#### Structure and Contents
+
+The software in the `src` folder is organized into various modules, each responsible for handling specific aspects of the ESP32's capabilities. Below is an overview of these modules and their roles:
+
+- **Network Management Modules:**
+  - `wifi_connect.py`: This module is responsible for connecting the ESP32 to WiFi networks. It manages SSID and password input, connection retries, and status reporting.
+  - `wifi_search.py`: Handles the scanning of nearby WiFi networks, retrieving data such as SSID, signal strength (RSSI), and security protocols.
+  - `wifi_ap.py`: Configures the ESP32 to operate as a WiFi access point, allowing other devices to connect directly to it.
+
+- **Device Control Modules:**
+  - `gpio_control.py`: Provides functions to control the ESP32's GPIO pins. This includes turning LEDs on/off, blinking patterns, and managing other GPIO-driven peripherals.
+  - `sensor_handler.py`: Manages sensor data acquisition, specifically designed for the DHT11 temperature and humidity sensor, with potential for future sensor integrations.
+
+- **System Utilities:**
+  - `boot_screen.py`: Displays critical system information when the ESP32 boots up, including chip ID, available RAM, and CPU frequency, mimicking a Linux-like boot screen.
+  - `cmd_processor.py`: A command interpreter for processing and executing API commands received via the web interface, enabling remote control over the ESP32's functions.
+
+- **Web Interface Modules:**
+  - `web_server.py`: Hosts a lightweight web server directly on the ESP32. This server handles incoming HTTP requests, serves web pages, and processes API commands, offering a user-friendly interface for controlling the device.
+
+#### Key Features and Usage
+
+- **MicroPython-Based Development:** 
+  - The code in this folder is written in MicroPython, making it ideal for ESP32 development. This lightweight Python implementation allows for rapid prototyping and easy modifications.
+
+- **Modular Design:**
+  - Each module within the `src` folder is designed to be independent and reusable. This modular approach ensures that components can be easily updated or replaced without affecting the overall system.
+
+- **Hardware-Specific Optimization:**
+  - All software is optimized for the ESP32's architecture, taking advantage of its dual-core processor, integrated WiFi, and Bluetooth capabilities.
+
+- **Web-Based Control:**
+  - The ESP32 can be controlled via a web interface hosted by the device itself, allowing users to manage network connections, control GPIOs, and interact with sensors directly from a browser.
+
+#### Additional Modules Planned
+
+As the NetMaster_OS project grows, additional modules will be added to support more advanced features:
+
+- **SD Card Integration:** 
+  - Future updates will include modules for interacting with an SD card, enabling data logging, storage of web pages, and persistent settings.
+
+- **Over-The-Air (OTA) Updates:**
+  - OTA update functionality will be introduced to allow for firmware upgrades directly through the web interface, simplifying the update process.
+
+- **Additional Sensor Support:**
+  - Modules will be added to support more sensors and peripherals, allowing the ESP32 to interact with a wider range of hardware.
+
+#### Development Tools Required
+
+- **Thonny IDE:**
+  - Thonny is the recommended Integrated Development Environment (IDE) for writing and uploading MicroPython code to the ESP32. It's beginner-friendly and integrates seamlessly with MicroPython firmware.
+
+- **MicroPython Firmware:**
+  - The software in the `src` folder is built on MicroPython. Ensure that your ESP32 is flashed with the latest MicroPython firmware to run these modules correctly.
+
+#### Contributing
+
+When contributing to the NetMaster_OS, focus on maintaining modularity and clarity within the `src` folder. Each module should handle a specific task related to the ESP32, ensuring the codebase remains organized and scalable.
