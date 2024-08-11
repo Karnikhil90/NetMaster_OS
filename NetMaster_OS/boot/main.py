@@ -156,18 +156,6 @@ def wifi_ap(ssid=DEVICE_NAME, password=''):
     print('Gateway:', ap.ifconfig()[2])
     print('DNS server:', ap.ifconfig()[3])
 
-def boot_screen():
-    chip_id = ubinascii.hexlify(machine.unique_id()).decode()
-    free_ram = gc.mem_free()
-    flash_size = uos.statvfs('/')[1] * uos.statvfs('/')[2]
-    cpu_frequency = machine.freq()
-    
-    print("Boot Screen")
-    print("Device Name:", DEVICE_NAME)
-    print("Chip ID:", chip_id)
-    print(f"Free RAM: {free_ram} bytes ({free_ram / 1024:.2f} KB)")
-    print(f"Flash Size: {flash_size} bytes ({flash_size / 1024:.2f} KB)")
-    print(f"CPU Frequency: {cpu_frequency / 1_000_000} MHz")  # Convert to MHz
 
 def url_decode(encoded_str):
     replace_blank = ['%20', '&']
@@ -297,21 +285,40 @@ def host_website():
         cl.send(response.encode())
         cl.close()
 
+def boot_screen():
+    boot_screen_data = []
+    chip_id = ubinascii.hexlify(machine.unique_id()).decode()
+    free_ram = gc.mem_free()
+    flash_size = uos.statvfs('/')[1] * uos.statvfs('/')[2]
+    cpu_frequency = machine.freq()
+    boot_screen_data.append("Device Name:", DEVICE_NAME)
+    boot_screen_data.append("Chip ID:", chip_id)
+    boot_screen_data.append(f"Free RAM: {free_ram} bytes ({free_ram / 1024:.2f} KB)")
+    boot_screen_data.append(f"Flash Size: {flash_size} bytes ({flash_size / 1024:.2f} KB)")
+    boot_screen_data.append(f"CPU Frequency: {cpu_frequency / 1_000_000} MHz")
+    
+    for data in boot_screen_data:
+        print(data)
+        time.sleep(0.250)
+
 
 # mani() : is to be called organizedly 
+# Its hosting own network as per The Device name
+# InBuild led will on untill the host_website
 
 def main():
     led_pin.on()
     print("System is booting up.....")
     # Configure as an access point
-    # wifi_ap()
-    wifi_connect()
+    wifi_ap()
+    # wifi_connect()
     time.sleep(0.5)
     # Print boot screen
     boot_screen()
     time.sleep(1)
     # Start hosting the website
     print("WiFi AP is on. Connect to the network and access the website.")
+    led_pin.off()
     host_website()
 
 # Driver Code 
